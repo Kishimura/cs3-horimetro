@@ -49,30 +49,36 @@ def formatar_tempo(total_minutos):
     return f"Tempo de corte: {horas}h {minutos}min"
 
 def main():
+    while True:
+        inicial, final = pedir_horimetros()
 
-    inicial, final = pedir_horimetros()
+        resultado_inicial = validar_horimetro(inicial)
+        resultado_final = validar_horimetro(final)
 
-    resultado_inicial = validar_horimetro(inicial)
-    resultado_final = validar_horimetro(final)
+        if resultado_inicial and resultado_final:
 
-    if resultado_inicial and resultado_final:
+            inicial_minutos = converter_para_minutos(inicial)
 
-        inicial_minutos = converter_para_minutos(inicial)
+            final_minutos = converter_para_minutos(final)
 
-        final_minutos = converter_para_minutos(final)
+            if final_minutos < inicial_minutos:
+                print('Horímetro final não pode ser menor que o inicial')
+                return
 
-        if final_minutos < inicial_minutos:
-            print('Horímetro final não pode ser menor que o inicial')
-            return
+            diferenca = calcular_diferenca(inicial_minutos, final_minutos)
 
-        diferenca = calcular_diferenca(inicial_minutos, final_minutos)
+            tempo_formatado = formatar_tempo(diferenca)
 
-        tempo_formatado = formatar_tempo(diferenca)
+            print(tempo_formatado)
 
-        print(tempo_formatado)
+        else:
+            print("Horímetro inválido. Use o formato HORAS:MINUTOS")
 
-    else:
-        print("Horímetro inválido. Use o formato HORAS:MINUTOS")
-
+        continuar = input(
+            "Deseja calcular outro corte? [S/N]: "
+        )
+        if continuar.lower() != "s":
+            print('programa encerrado')
+            break
 
 main()
