@@ -103,6 +103,4 @@ def main():
             mostrar_historico(historico)
             break
 
-
-
 main()
