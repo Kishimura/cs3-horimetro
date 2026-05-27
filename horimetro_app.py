@@ -1,3 +1,6 @@
+historico = []
+
+
 # Pega o horimetro inical e final
 def pedir_horimetros():
     horimetro_inicial = input("Horímetro inicial (HORAS:MINUTOS): ")
@@ -48,6 +51,14 @@ def formatar_tempo(total_minutos):
 
     return f"Tempo de corte: {horas}h {minutos}min"
 
+def mostrar_historico(historico):
+    for corte in historico:
+        print(corte["inicial"])
+        print(corte["final"])
+        print(corte["tempo"])
+
+
+
 def main():
     while True:
         inicial, final = pedir_horimetros()
@@ -69,7 +80,16 @@ def main():
 
             tempo_formatado = formatar_tempo(diferenca)
 
+            corte = {
+                "inicial": inicial,
+                "final": final,
+                "tempo": tempo_formatado
+            }
+            historico.append(corte)
+
             print(tempo_formatado)
+
+            print(historico)
 
         else:
             print("Horímetro inválido. Use o formato HORAS:MINUTOS")
@@ -78,7 +98,11 @@ def main():
             "Deseja calcular outro corte? [S/N]: "
         )
         if continuar.lower() != "s":
-            print('programa encerrado')
+            print('Programa encerrado')
+
+            mostrar_historico(historico)
             break
+
+
 
 main()
