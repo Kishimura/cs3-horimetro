@@ -39,20 +39,22 @@ O sistema:
 
 ## Funcionalidades atuais
 
-- Validação de horímetro
-- Conversão para minutos
-- Cálculo de diferença
-- Formatação do tempo
+- Entrada de horímetro inicial e final
+- Validação do formato HORAS:MINUTOS
+- Validação de minutos entre 00 e 59
+- Cálculo do tempo total de corte
+- Aviso para tempos de corte acima de 40 horas
+- Confirmação antes de aceitar tempos acima do esperado
+- Loop para calcular vários cortes
+- Histórico dos cortes calculados durante a execução
 
 ---
 
 ## Próximas melhorias
 
-- Histórico de cortes
-- Exportação para Excel
 - Interface gráfica com Flet
-- Cadastro de máquinas
-- Relatórios
+- Campos separados para horas e minutos
+- Exportação do histórico
 
 ---
 
