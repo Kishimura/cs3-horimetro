@@ -29,8 +29,7 @@ def main (page: ft.Page):
        resultado_inicial, erro_inicial = validar_horimetro(inicial)
        resultado_final, erro_final = validar_horimetro(final)
 
-
-    page.add()
+       page.add()
 
 ft.app(target=main)
 
