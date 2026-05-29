@@ -158,4 +158,5 @@ def main():
                 else:
                     print("Digite apenas S ou N.")
 
-main()
+if __name__ == "__main__":
+    main()
