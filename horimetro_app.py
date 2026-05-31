@@ -21,7 +21,7 @@ def validar_horimetro(horimetro):
 
         # Verifica se os minutos sao menores que 0 e maiores que 59
         if minutos < 0 or minutos > 59:
-            return False, "HHorímetro inválido. Os minutos devem estar entre 00 e 59."
+            return False, "Horímetro inválido. Os minutos devem estar entre 00 e 59."
         else:
             return True, ""
 
