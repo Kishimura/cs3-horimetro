@@ -82,7 +82,7 @@ def main (page: ft.Page):
        page.update()
 
 
-   botao_calcular = ft.ElevatedButton(
+   botao_calcular = ft.Button(
        "Calcular",
         on_click=calcular
    )
@@ -108,6 +108,6 @@ ft.Row([
    )
 
 
-ft.app(target=main)
+ft.run(main)
 
 
