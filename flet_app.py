@@ -4,7 +4,6 @@ from horimetro_app import(
     converter_para_minutos,
     calcular_diferenca,
     formatar_tempo,
-    confirmar_tempo_alto
 )
 
 def main (page: ft.Page):
@@ -12,29 +11,63 @@ def main (page: ft.Page):
    page.title = "Calculadora de Horímetro - Cs3 Revestimentos"
 
 
+   page.horizontal_alignment =(
+       ft.CrossAxisAlignment.CENTER)
+
+   page.vertical_alignment = (
+       ft.MainAxisAlignment.CENTER
+   )
+
+   def somente_numeros(e):
+       valor = "".join(
+           caractere for caractere in e.control.value
+           if caractere.isdigit()
+       )
+
+       if e.control in [minutos_inicial, minutos_final]:
+           valor = valor[:2]
+
+       e.control.value = valor
+       page.update()
+
    horas_inicial = ft.TextField(
-       label="Horímetro inicial",
-       keyboard_type=ft.KeyboardType.NUMBER
+       label="Horas",
+       keyboard_type=ft.KeyboardType.NUMBER,
+       on_change=somente_numeros,
+       width=300
    )
 
    minutos_inicial = ft.TextField(
-       label="Minutos inicial",
-       max_length=2,
-       keyboard_type=ft.KeyboardType.NUMBER
+
+       label="Minutos",
+       keyboard_type=ft.KeyboardType.NUMBER,
+       on_change=somente_numeros,
+       width=100
+
    )
 
    horas_final = ft.TextField(
-       label="Horímetro final",
-       keyboard_type=ft.KeyboardType.NUMBER
+       label="Horas",
+       keyboard_type=ft.KeyboardType.NUMBER,
+       on_change=somente_numeros,
+       width=300
    )
 
    minutos_final = ft.TextField(
-       label="Minutos final",
-       max_length=2,
-       keyboard_type=ft.KeyboardType.NUMBER
+       label="Minutos",
+       keyboard_type=ft.KeyboardType.NUMBER,
+       on_change=somente_numeros,
+       width=100,
+
    )
 
-   resultado = ft.Text("")
+   resultado = ft.Text(
+       "",
+       size=22,
+       weight=ft.FontWeight.BOLD,)
+
+
+   mensagem = ft.Text("")
 
 
 
@@ -49,12 +82,14 @@ def main (page: ft.Page):
        resultado_final, erro_final = validar_horimetro(final)
 
        if not resultado_inicial:
-            resultado.value = erro_inicial
+            mensagem.value = erro_inicial
+            resultado.value = ""
             page.update()
             return
 
        if not resultado_final:
-           resultado.value = erro_final
+           mensagem.value = erro_final
+           resultado.value = ""
            page.update()
            return
 
@@ -76,37 +111,65 @@ def main (page: ft.Page):
            final_minutos
        )
 
+       if diferenca >= 40 * 60:
+           mensagem.value = "Atenção: o tempo de corte está acima do padrão esperado. Verifique os horímetros."
+           resultado.value = formatar_tempo(diferenca)
+           page.update()
+           return
 
        resultado.value = formatar_tempo(diferenca)
+
 
        page.update()
 
 
    botao_calcular = ft.Button(
        "Calcular",
-        on_click=calcular
-   )
 
+        icon=ft.Icons.CALCULATE,
+        on_click=calcular,
+        width=430,
+
+       style=ft.ButtonStyle(
+           text_style=ft.TextStyle(
+           size=20,
+           weight=ft.FontWeight.BOLD)
+       )
+
+   )
+   titulo = ft.Text(
+       "Calculadora de Horímetro",
+       size=28,
+       weight=ft.FontWeight.BOLD
+       )
 
 
    page.add(
+       ft.Column(
+           [
+               titulo,
 
-ft.Row([
-           horas_inicial,
-           minutos_inicial
-       ]),
+               ft.Row([horas_inicial, minutos_inicial],
+                      alignment=ft.MainAxisAlignment.CENTER,
+                      vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                      spacing=20),
 
-        ft.Row([
-           horas_final,
-           minutos_final
-       ]),
+               ft.Row([horas_final, minutos_final],
+                      alignment=ft.MainAxisAlignment.CENTER,
+                      vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                      spacing=20
+                      ),
 
-       botao_calcular,
+               botao_calcular,
+               resultado,
+               mensagem,
 
-       resultado
 
+           ],
+           horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+           spacing=20,
+       )
    )
-
 
 ft.run(main)
 
