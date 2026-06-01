@@ -1,5 +1,3 @@
-from datetime import datetime
-
 historico = []
 
 # Pega o horímetro inical e final digitados pelo usuário
