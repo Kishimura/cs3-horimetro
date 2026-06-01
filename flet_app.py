@@ -1,4 +1,5 @@
 import flet as ft
+from traducoes import traducoes as td
 from horimetro_app import(
     validar_horimetro,
     converter_para_minutos,
@@ -6,9 +7,24 @@ from horimetro_app import(
     formatar_tempo,
 )
 
+historico = []
+
+historico_visual = ft.Column(
+    [],
+    spacing=5,
+    scroll=ft.ScrollMode.AUTO,
+    height=180,
+)
+
 def main (page: ft.Page):
 
    page.title = "Calculadora de Horímetro - Cs3 Revestimentos"
+
+   subtitulo = ft.Text(
+       "Calcule o tempo de corte entre dois horímetros",
+       size=14,
+       color="#94A3B8"
+   )
 
 
    page.horizontal_alignment =(
@@ -30,11 +46,15 @@ def main (page: ft.Page):
        e.control.value = valor
        page.update()
 
+   idioma = "PT"
+
    horas_inicial = ft.TextField(
-       label="Horas",
+
+       label=td[idioma]["horas"],
        keyboard_type=ft.KeyboardType.NUMBER,
        on_change=somente_numeros,
-       width=300
+       width=300,
+       height=55,
    )
 
    minutos_inicial = ft.TextField(
@@ -42,7 +62,8 @@ def main (page: ft.Page):
        label="Minutos",
        keyboard_type=ft.KeyboardType.NUMBER,
        on_change=somente_numeros,
-       width=100
+       width=100,
+       height=55,
 
    )
 
@@ -50,7 +71,8 @@ def main (page: ft.Page):
        label="Horas",
        keyboard_type=ft.KeyboardType.NUMBER,
        on_change=somente_numeros,
-       width=300
+       width=300,
+       height=55,
    )
 
    minutos_final = ft.TextField(
@@ -58,16 +80,23 @@ def main (page: ft.Page):
        keyboard_type=ft.KeyboardType.NUMBER,
        on_change=somente_numeros,
        width=100,
+       height=55,
 
    )
 
    resultado = ft.Text(
        "",
+       color="#4ADE80",
        size=22,
        weight=ft.FontWeight.BOLD,)
 
 
-   mensagem = ft.Text("")
+   mensagem = ft.Text("",
+                      color="#F87171",
+                      size=14,
+                      )
+
+
 
 
 
@@ -119,58 +148,131 @@ def main (page: ft.Page):
 
        resultado.value = formatar_tempo(diferenca)
 
+       corte = {
+           "inicial": inicial,
+           "final": final,
+           "tempo": resultado.value
+       }
+
+       historico.append(corte)
+
+       historico_visual.controls.append(
+           ft.Text(
+               f"{inicial} → {final} | {resultado.value}",
+               size=13,
+               color="#CBD5E1"
+           )
+       )
+       mensagem.value = ""
 
        page.update()
 
-
    botao_calcular = ft.Button(
-       "Calcular",
+       content=ft.Row(
+           [
+               ft.Icon(ft.Icons.CALCULATE, size=28),
 
-        icon=ft.Icons.CALCULATE,
-        on_click=calcular,
-        width=430,
+               ft.Text(
+                   "Calcular",
+                   size=24,
+                   weight=ft.FontWeight.BOLD
+               ),
+           ],
+           alignment=ft.MainAxisAlignment.CENTER,
+           spacing=8,
+       ),
+       on_click=calcular,
+
+       width=520,
+       height=55,
 
        style=ft.ButtonStyle(
-           text_style=ft.TextStyle(
-           size=20,
-           weight=ft.FontWeight.BOLD)
+           bgcolor="#2563EB",
+           color="white",
        )
 
    )
    titulo = ft.Text(
        "Calculadora de Horímetro",
        size=28,
-       weight=ft.FontWeight.BOLD
+       height=75,
+       weight=ft.FontWeight.BOLD,
+
        )
 
 
    page.add(
-       ft.Column(
-           [
-               titulo,
-
-               ft.Row([horas_inicial, minutos_inicial],
-                      alignment=ft.MainAxisAlignment.CENTER,
-                      vertical_alignment=ft.CrossAxisAlignment.CENTER,
-                      spacing=20),
-
-               ft.Row([horas_final, minutos_final],
-                      alignment=ft.MainAxisAlignment.CENTER,
-                      vertical_alignment=ft.CrossAxisAlignment.CENTER,
-                      spacing=20
-                      ),
-
-               botao_calcular,
-               resultado,
-               mensagem,
 
 
-           ],
-           horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-           spacing=20,
-       )
-   )
+     ft.Container(
 
+           content=ft.Column(
+               [
+                   titulo,
+                   subtitulo,
+
+
+
+                   ft.Text(
+                       "Horímetro Inicial",
+                       size=18,
+                       weight=ft.FontWeight.BOLD,
+                       color="#60A5FA"
+                   ),
+
+                   ft.Row([horas_inicial, minutos_inicial],
+                          alignment=ft.MainAxisAlignment.CENTER,
+                          vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                          spacing=20
+                          ),
+
+                   ft.Text(
+                       "Horímetro Final",
+                       size=18,
+                       weight=ft.FontWeight.BOLD,
+                       color="#4ADE80"
+                   ),
+
+
+                   ft.Row([horas_final, minutos_final],
+                          alignment=ft.MainAxisAlignment.CENTER,
+                          vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                          spacing=20
+                          ),
+
+                   botao_calcular,
+                   ft.Container(height=10),
+
+                   resultado,
+                   mensagem,
+                   ft.Text(
+                       "Histórico",
+                       size=23,
+                       weight=ft.FontWeight.BOLD,
+                       color="#CBD5E1"
+                   ),
+                   historico_visual,
+
+
+
+               ],
+               horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+               spacing=20,
+               ),
+           padding=30,
+           border_radius=20,
+           bgcolor="#111827",
+           width=620,
+
+           shadow=ft.BoxShadow(
+             blur_radius=30,
+             color="#000000",
+             spread_radius=1,
+         )
+
+
+          )
+     )
 ft.run(main)
 
 
