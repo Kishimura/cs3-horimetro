@@ -41,7 +41,7 @@ O sistema:
 
 ---
 
-## Funcionalidades atuais
+## Funcionalidades
 
 - Entrada de horímetro inicial e final
 - Validação do formato HORAS:MINUTOS
