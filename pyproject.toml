@@ -1,0 +1,16 @@
+﻿[project]
+name = "horimetro-app"
+version = "1.0.0"
+description = "Calculadora de horimetro para cortes de maquinas multifio."
+requires-python = ">=3.10"
+dependencies = [
+  "flet"
+]
+
+[tool.flet]
+product = "Horimetro App"
+company = "CS3 Revestimentos"
+
+[tool.flet.app]
+path = "src"
+module = "flet_app.py"

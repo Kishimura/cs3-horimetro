@@ -4,6 +4,10 @@ Sistema em Python para cálculo de tempo de corte de máquinas multifio utilizad
 
 ---
 
+## Imagem do aplicativo
+
+![Calculadora de Horimetro](assets/calculadora_horimetro.png)
+
 ## Sobre o projeto
 
 Trabalho no setor de multifio em uma empresa de mármore e granitos, onde os operadores anotam o horímetro inicial e final das máquinas durante o corte dos blocos.
@@ -63,4 +67,3 @@ O sistema:
 - Python
 - Flet (em desenvolvimento) - interface visual com finalidade de ser intuitiva para o usuário.
 - Pandas (futuramente)
-

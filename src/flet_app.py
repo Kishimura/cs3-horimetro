@@ -1,5 +1,8 @@
+import sys
+from pathlib import Path
+
 import flet as ft
-from traducoes import traducoes as td
+
 from horimetro_app import(
     validar_horimetro,
     converter_para_minutos,
@@ -7,6 +10,9 @@ from horimetro_app import(
     formatar_tempo,
 )
 
+def asset_path(nome):
+    base = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent.parent))
+    return base / "assets" / nome
 historico = []
 
 historico_visual = ft.Column(
@@ -19,13 +25,7 @@ historico_visual = ft.Column(
 def main (page: ft.Page):
 
    page.title = "Calculadora de Horímetro - Cs3 Revestimentos"
-
-   subtitulo = ft.Text(
-       "Calcule o tempo de corte entre dois horímetros",
-       size=14,
-       color="#94A3B8"
-   )
-
+   page.window.icon = str(asset_path("icone.ico"))
 
    page.horizontal_alignment =(
        ft.CrossAxisAlignment.CENTER)
@@ -46,11 +46,9 @@ def main (page: ft.Page):
        e.control.value = valor
        page.update()
 
-   idioma = "PT"
-
    horas_inicial = ft.TextField(
 
-       label=td[idioma]["horas"],
+       label="Horas",
        keyboard_type=ft.KeyboardType.NUMBER,
        on_change=somente_numeros,
        width=300,
@@ -95,7 +93,6 @@ def main (page: ft.Page):
                       color="#F87171",
                       size=14,
                       )
-
 
 
 
@@ -158,7 +155,7 @@ def main (page: ft.Page):
 
        historico_visual.controls.append(
            ft.Text(
-               f"{inicial} → {final} | {resultado.value}",
+               f"{inicial} -> {final} | {resultado.value}",
                size=13,
                color="#CBD5E1"
            )
@@ -166,6 +163,8 @@ def main (page: ft.Page):
        mensagem.value = ""
 
        page.update()
+
+
 
    botao_calcular = ft.Button(
        content=ft.Row(
@@ -209,11 +208,9 @@ def main (page: ft.Page):
            content=ft.Column(
                [
                    titulo,
-                   subtitulo,
 
 
-
-                   ft.Text(
+                    ft.Text(
                        "Horímetro Inicial",
                        size=18,
                        weight=ft.FontWeight.BOLD,
@@ -253,6 +250,21 @@ def main (page: ft.Page):
                    ),
                    historico_visual,
 
+                   ft.Row(
+                       [
+                           ft.Text(
+                               "Desenvolvido por Tiago",
+                               size=12,
+                               color="#94A3B8",
+                           ),
+                           ft.TextButton(
+                               "GitHub",
+                               url="https://github.com/Kishimura",
+                           ),
+                       ],
+                       alignment=ft.MainAxisAlignment.CENTER,
+                   ),
+
 
 
                ],
@@ -274,5 +286,3 @@ def main (page: ft.Page):
           )
      )
 ft.run(main)
-
-
