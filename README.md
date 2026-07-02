@@ -54,16 +54,9 @@ O sistema:
 
 ---
 
-## Próximas melhorias
-
-- Interface gráfica com Flet
-- Campos separados para horas e minutos
-- Exportação do histórico
-
----
-
 ## Tecnologias
 
 - Python
-- Flet (em desenvolvimento) - interface visual com finalidade de ser intuitiva para o usuário.
-- Pandas (futuramente)
+- Flet
+- PyInstaller
+- Inno Setup
